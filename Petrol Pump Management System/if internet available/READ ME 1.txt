@@ -1,0 +1,22 @@
+
+--Using MySQL in a local server--
+
+--Do in the linux(ubuntu) terminal--
+
+step1>> You can also use the command line to download.. changing the version number of the package:
+	"cd /tmp/ && wget https://dev.mysql.com/get/mysql-apt-config_0.8.10-1_all.de"
+	
+step2>> Run the commands below to install:
+	"sudo dpkg -i mysql-apt-config_0.8.10-1_all.deb"
+	
+step3>> Using the currnet system as a local host:
+	"mysql -u root -p"
+	
+step4>> Enter the password
+
+step5>> create a database:
+	"create database `database-name`"
+	
+step6>>use the create database
+	"use `database-name`"
+

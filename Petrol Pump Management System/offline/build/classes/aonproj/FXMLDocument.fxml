@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="390.0" prefWidth="490.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aonproj.LoginController">
+   <children>
+      <Pane prefHeight="390.0" prefWidth="490.0" style="-fx-background-color: #1b222d;">
+         <children>
+            <Pane layoutY="14.0" opacity="0.84" prefHeight="122.0" prefWidth="188.0" style="-fx-background-color: #ffe947;">
+               <children>
+                  <Text layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="AON" wrappingWidth="79.91015255451202">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="80.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="petrol pumps">
+                     <font>
+                        <Font size="12.0" />
+                     </font></Text>
+                  <Text layoutX="19.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DBMS projcet" wrappingWidth="85.91015625">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="19.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="abid, omer, naveed" wrappingWidth="122.91015625">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <FontAwesomeIconView fill="#ffe947" glyphName="TIMES_CIRCLE" layoutX="450.0" layoutY="40.0" onMousePressed="#closeLoginPage" size="30" style="../../../../bootstrap.min.css: 2323;" />
+            <JFXTextField fx:id="namef" focusColor="#ffe947" layoutX="151.0" layoutY="196.0" prefHeight="26.0" prefWidth="213.0" promptText="username" unFocusColor="#ffe947" />
+            <Button layoutX="214.0" layoutY="327.0" mnemonicParsing="false" onAction="#menuk" style="-fx-background-color: #ffe947;" text="Login" />
+            <FontAwesomeIconView fill="#ffe947" glyphName="USER" layoutX="353.0" layoutY="213.0" size="13.5" />
+         </children>
+      </Pane>
+      <JFXPasswordField fx:id="passf" focusColor="#ffe947" labelFloat="true" layoutX="149.0" layoutY="251.0" prefHeight="26.0" prefWidth="213.0" promptText="password" unFocusColor="#ffe947">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </JFXPasswordField>
+      <FontAwesomeIconView fill="#ffe947" glyphName="KEY" layoutX="348.0" layoutY="270.0" size="13.5" />
+   </children>
+</AnchorPane>
