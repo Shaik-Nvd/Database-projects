@@ -1,0 +1,7 @@
+For User account: 
+user_ID: 101
+paswword: 101
+
+For Admin account:
+user_id: 1001
+password: 1A01

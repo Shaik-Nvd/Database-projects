@@ -1,0 +1,239 @@
+Register :
+
+private void rregisterActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        try
+        {
+           
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/blood","root","");
+            CallableStatement st=con.prepareCall("{CALL LOGIN(?,?,?)}");
+            st.setInt(1, Integer.parseInt(rtextf.getText()));
+            st.setString(2, rpwdf.getText());
+            st.setString(3, String.valueOf(jComboBox2.getSelectedItem()));
+            st.execute();
+            JOptionPane.showMessageDialog(null,"Register Successfull");
+            Registration r=new Registration();
+          r.show();
+
+    }                                         
+catch (SQLException ex) {
+            Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+Sign in:
+
+ private void sinActionPerformed(java.awt.event.ActionEvent evt) {                                    
+        try
+        {
+            setID(stextf.getText());
+            String sql="SELECT *FROM register WHERE Id=? AND Password=? AND Role=?";
+            Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/blood","root","");
+            PreparedStatement st=con.prepareStatement(sql);
+            st.setInt(1, Integer.parseInt(stextf.getText()));
+            st.setString(2, spwdf.getText());
+            st.setString(3, String.valueOf(jComboBox1.getSelectedItem()));
+            ResultSet rs=st.executeQuery();
+            if(rs.next())
+            {
+                JOptionPane.showMessageDialog(this,"Sign in Successfull");
+                if(jComboBox1.getSelectedIndex()==0)
+                {
+                    BloodDonor bd=new BloodDonor();
+                   bd.show();
+                }
+                else
+                {
+                    BloodRecepient br=new BloodRecepient();
+                   br.show();
+                }
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this,"Sign in Unsuccessful");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+ }                   
+
+Registration Form(Display):
+
+ public Registration() {
+        initComponents();
+        show_user();
+    }
+    public ArrayList<User> userlist()
+    {
+        ArrayList<User> userlist = new  ArrayList<>();
+         try
+    {
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/blood","root","");
+        String query="SELECT * FROM REGISTERFORM";
+        Statement st=con.createStatement();
+        ResultSet rs=st.executeQuery(query);
+        User user;
+        while(rs.next())
+        {
+            user=new User(rs.getString("fname"),rs.getInt("id"),rs.getString("gender"));
+            userlist.add(user);  
+        }
+        
+    }
+     catch (SQLException ex) {
+            Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
+        }    
+         return userlist;
+    }
+    
+    public void show_user()
+    {
+        ArrayList<User> list=userlist();
+        DefaultTableModel model=(DefaultTableModel)Table1.getModel();
+        Object[] row = new Object[3];
+        for(int i=0;i<list.size();i++ )
+        {
+            row[0] = list.get(i).getname();
+            row[1]=list.get(i).getid();
+            row[2]=list.get(i).getgender();
+            model.addRow(row);
+        }
+        
+    }
+
+Donor Form:
+
+private void dinsertActionPerformed(java.awt.event.ActionEvent evt) {                                        
+       try
+    {
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/blood","root","");
+            String sql="INSERT INTO donor VALUES(?,?,?,?,?,?)";
+                PreparedStatement st=con.prepareStatement(sql);
+                 st.setString(1, dname.getText()); 
+                 st.setInt(2, Integer.parseInt(did.getText()));   
+                st.setString(3, String.valueOf(dstate.getSelectedItem()));
+                st.setString(4, String.valueOf(dcity.getSelectedItem()));
+                 st.setString(5, String.valueOf(dblood.getSelectedItem()));
+                st.setString(6, String.valueOf(dbottle.getSelectedItem()));
+                 st.setString(7, dcon.getText());
+                st.executeUpdate();
+                JOptionPane.showMessageDialog(null," Donor Details Submitted Successfully");
+    }                                       
+catch (SQLException ex) {
+            Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+}
+
+Recepient Form:
+ private void rsubmitActionPerformed(java.awt.event.ActionEvent evt) {                                        
+       try
+    {
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/blood","root","");
+            String sql="INSERT INTO recepient VALUES(?,?,?,?,?)";
+                PreparedStatement st=con.prepareStatement(sql);
+                  st.setString(1, brname.getText()); 
+                 st.setInt(2, Integer.parseInt(brid.getText()));  
+                                                        
+                st.setString(3, String.valueOf(rstate.getSelectedItem()));
+                st.setString(4, String.valueOf(rcity.getSelectedItem()));
+                 st.setString(5, String.valueOf(rblood.getSelectedItem()));
+                st.executeUpdate();
+                JOptionPane.showMessageDialog(null,"Details Submitted Successfully");
+    }                                       
+catch (SQLException ex) {
+            Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }           
+
+Search Donor:
+
+ublic ArrayList<Getdonor> donorlist()
+    {
+        ArrayList<Getdonor> donorlist = new  ArrayList<>();
+         try
+    {
+       Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/blood","root","");
+        if(null!=select)
+        {
+        PreparedStatement st=con.prepareStatement("SELECT * FROM Donor WHERE BLOODGROUP=?");
+         st.setString(1,select.getText());              
+        ResultSet rs=st.executeQuery();
+       Getdonor getdonor;
+        while(rs.next())
+        {
+            getdonor=new Getdonor(rs.getString("fname"),rs.getInt("id"),rs.getString("stat"),rs.getString("city"),rs.getString("bloodgroup"),rs.getString("bottles"),rs.getString("contact"));
+            donorlist.add(getdonor);  
+        }
+        JOptionPane.showMessageDialog(null," Search Successfull");
+        } 
+        else
+        {
+           JOptionPane.showMessageDialog(null," Search Unsuccessfull"); 
+        }
+    }
+     catch (SQLException ex) {
+            Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
+        }    
+         return donorlist;
+    }
+    
+ public void show_donor()
+    {
+        ArrayList<Getdonor> list=donorlist();
+        DefaultTableModel model=(DefaultTableModel)Table.getModel();
+        Object[] row = new Object[7];
+        for(int i=0;i<list.size();i++ )
+        {
+            row[0] = list.get(i).getname();
+            row[1]=list.get(i).getid();
+            row[2]=list.get(i).getstate();
+            row[3] = list.get(i).getcity();
+            row[4] = list.get(i).getbg();
+            row[5] = list.get(i).getbot();
+            row[6] = list.get(i).getcon();
+            model.addRow(row);
+        }
+ }
+ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+       show_donor();
+    }                                        
+
+Admin Login:
+
+ private void asignActionPerformed(java.awt.event.ActionEvent evt) {                                      
+        try
+        {
+            Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/blood","root","");
+            PreparedStatement ps=con.prepareStatement("SELECT * FROM admin WHERE ID=? AND password=? ");
+            ps.setString(1, atextid.getText());
+            ps.setString(2, String.valueOf(atextp.getPassword()));
+            ResultSet rs=ps.executeQuery();
+            if(rs.next())
+            {
+                JOptionPane.showMessageDialog(this, "Admin Login Successful");
+
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "Admin Login Unsuccessful");
+            }
+        }       catch (SQLException ex) {
+            Logger.getLogger(Frame1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Admin_access a=new Admin_access();
+        a.show();
+}
+
+Delete:
+
+ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/blood","root","");
+             PreparedStatement ps=con.prepareStatement("DELETE FROM REGISTER WHERE id=?");
+             ps.setInt(1, Integer.parseInt(delid.getText()));
+             ps.executeUpdate();
+             JOptionPane.showMessageDialog(null,"User Deleted");
+        } catch (SQLException ex) {
+            Logger.getLogger(Admin_access.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }                                        
+
